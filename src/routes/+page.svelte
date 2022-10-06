@@ -1,6 +1,7 @@
 <script>
 	import { initializeApp } from 'firebase/app';
-	import { getStorage, ref, listAll, getDownloadURL} from 'firebase/storage';
+	import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage';
+	import { v4 } from 'uuid';
 	import Icon from '@iconify/svelte';
 	const firebaseConfig = {
 		apiKey: 'AIzaSyBCsm0fErlM01kq6w2DJqyQaPOH0T3xD2Q',
@@ -16,7 +17,8 @@
 	const app = initializeApp(firebaseConfig);
 	const storage = getStorage(app);
 	const storageRef = ref(storage);
-	listAll(storageRef).then((res) => {
+	const storageImagesRef = ref(storage, 'images');
+	listAll(storageImagesRef).then((res) => {
 		res.items.forEach((item) => {
 			getDownloadURL(item).then((url) => {
 				urlImages = [...urlImages, url];
@@ -25,24 +27,23 @@
 	});
 
 	function upload(e) {
-		const files = e.target.files;
-		for (let i = 0; i < files.length; i++) {
-			console.log(files.item(i));
-			// uploadBytes(storageRef, files.item(i)).then((snapshot) => {
-			// 	console.log(snapshot);
-			// });
-		}
+		const file = e.target.files[0];
+		console.log(file.name + v4());
+		const refImage = ref(storage, `images/${file.name + v4()}`);
+		uploadBytes(refImage, file).then(() => {
+			console.log('upload');
+		});
 	}
 </script>
 
-<svelte:head>
-	
-	<title>Kooky🐰</title>
-</svelte:head>
-
 <header>
 	<h1>Kooky, o coelho mais lindo</h1>
-	<input type="file">
+	<input
+		type="file"
+		on:change={(e) => {
+			upload(e);
+		}}
+	/>
 </header>
 
 <main>
@@ -52,15 +53,11 @@
 </main>
 
 <a id="back" href="#top">
-	<Icon icon="akar-icons:arrow-up" color="black" width="40" height="40"/>
+	<Icon icon="akar-icons:arrow-up" color="black" width="40" height="40" />
 </a>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
-	*{
-		font-family: sans-serif;
-	}
-	#back{
+	#back {
 		position: fixed;
 		background-color: white;
 		padding: 1rem;
@@ -70,10 +67,12 @@
 		place-items: center;
 		border-radius: 50%;
 	}
-	header{
+
+	header {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		padding-top: 1rem;
 	}
 
 	main {

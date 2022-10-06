@@ -24,6 +24,7 @@
 	"type": "module",
 	"dependencies": {
 		"@iconify/svelte": "^3.0.0",
-		"firebase": "^9.10.0"
+		"firebase": "^9.10.0",
+		"uuid": "^9.0.0"
 	}
 }

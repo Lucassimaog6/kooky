@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
+*{
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'Cutive Mono', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #282828;
+}
