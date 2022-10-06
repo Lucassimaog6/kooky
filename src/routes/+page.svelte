@@ -14,7 +14,7 @@
 
 	const app = initializeApp(firebaseConfig);
 	const storage = getStorage(app);
-	const storageRef = ref(storage, 'images/');
+	const storageRef = ref(storage);
 	listAll(storageRef).then((res) => {
 		res.items.forEach((item) => {
 			getDownloadURL(item).then((url) => {
@@ -43,16 +43,16 @@
 		<img src={url} alt="kooky" />
 	{/each}
 </main>
-<input
+<!-- <input
 	on:change={(e) => upload(e)}
 	type="file"
 	placeholder="Add"
 	multiple
 	class="custom-file-input"
-/>
+/> -->
 
 <style>
-	.custom-file-input {
+	/* .custom-file-input {
 		position: fixed;
 		right: 2rem;
 		bottom: 2rem;
@@ -76,7 +76,7 @@
 	}
 	.custom-file-input:active::before {
 		background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-	}
+	} */
 
 	main {
 		overflow-x: hidden;
