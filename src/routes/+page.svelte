@@ -39,11 +39,15 @@
 <header>
 	<h1>Kooky, o coelho mais lindo</h1>
 	<input
+		id="file"
 		type="file"
 		on:change={(e) => {
 			upload(e);
 		}}
 	/>
+	<label for="file"
+		><Icon icon="ic:round-add-photo-alternate" width="1.5rem" /> Adicionar fotos!</label
+	>
 </header>
 
 <main>
@@ -66,6 +70,26 @@
 		display: grid;
 		place-items: center;
 		border-radius: 50%;
+		border: 10px double #282828;
+	}
+
+	input {
+		display: none;
+	}
+	label {
+		margin-top: 1rem;
+		display: flex;
+		align-items: center;
+		padding: 1rem;
+		background-color: #ddd;
+		border-radius: 1rem;
+		font-size: 1.1rem;
+		transition: scale 200ms, background-color 200ms;
+	}
+
+	label:hover {
+		scale: 1.1;
+		background-color: #bbb;
 	}
 
 	header {
@@ -83,8 +107,9 @@
 	}
 	img {
 		max-width: 100%;
-		margin-bottom: 2rem;
+		margin: 2rem;
 		border-radius: 1rem;
+		box-shadow: 0 0 5px 3px rgba(0, 0, 0, .2);
 	}
 	@media screen and (max-width: 1000px) {
 		main {
