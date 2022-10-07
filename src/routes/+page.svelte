@@ -16,7 +16,6 @@
 
 	const app = initializeApp(firebaseConfig);
 	const storage = getStorage(app);
-	const storageRef = ref(storage);
 	const storageImagesRef = ref(storage, 'images');
 	listAll(storageImagesRef).then((res) => {
 		res.items.forEach((item) => {
@@ -27,12 +26,15 @@
 	});
 
 	function upload(e) {
-		const file = e.target.files[0];
-		console.log(file.name + v4());
-		const refImage = ref(storage, `images/${file.name + v4()}`);
-		uploadBytes(refImage, file).then(() => {
-			console.log('upload');
-		});
+		const files = e.target.files;
+		for(let i = 0; i < files.length; i++){
+			const file = files[i]
+			console.log(file.name + v4());
+			const refImage = ref(storage, `images/${file.name + v4()}`);
+			uploadBytes(refImage, file).then(() => {
+				console.log('upload');
+			});
+		}
 	}
 </script>
 
@@ -41,6 +43,7 @@
 	<input
 		id="file"
 		type="file"
+		multiple
 		on:change={(e) => {
 			upload(e);
 		}}
@@ -107,9 +110,8 @@
 	}
 	img {
 		max-width: 100%;
-		margin: 2rem;
+		margin: 1rem 0;
 		border-radius: 1rem;
-		box-shadow: 0 0 5px 3px rgba(0, 0, 0, .2);
 	}
 	@media screen and (max-width: 1000px) {
 		main {
@@ -117,8 +119,13 @@
 		}
 	}
 	@media screen and (max-width: 600px) {
+		h1{
+			font-size: 1.5rem;
+		}
 		main {
 			column-count: 1;
+			margin: 1rem;
+			column-gap: 0;
 		}
 	}
 </style>
