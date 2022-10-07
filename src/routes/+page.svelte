@@ -1,4 +1,6 @@
 <script>
+	import '@specialdoom/proi-ui/variables.css';
+	import { toaster, ToastProvider } from '@specialdoom/proi-ui';
 	import { initializeApp } from 'firebase/app';
 	import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage';
 	import { v4 } from 'uuid';
@@ -13,6 +15,14 @@
 		messagingSenderId: '213871871539',
 		appId: '1:213871871539:web:03d336e326742965328546'
 	};
+
+	function enviado(){
+		toaster.send({
+      title: "Imagem enviada com sucesso",
+			message: "Por favor, recarregue a página!",
+      variant: "sucess"
+  });
+	}
 
 	let urlImages = [];
 
@@ -31,15 +41,15 @@
 		const files = e.target.files;
 		for (let i = 0; i < files.length; i++) {
 			const file = files[i];
-			console.log(file.name + v4());
 			const refImage = ref(storage, `images/${file.name + v4()}`);
 			uploadBytes(refImage, file).then(() => {
-				console.log('upload');
+				enviado();
 			});
 		}
 	}
 </script>
 
+<ToastProvider />
 <Header
 	title="Kooky, o coelho mais lindo"
 	on:change={(e) => {

@@ -579,6 +579,11 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@specialdoom/proi-ui@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@specialdoom/proi-ui/-/proi-ui-3.0.2.tgz#bd5c3b447dd69e3e44559cfd006ac267d02aa99c"
+  integrity sha512-vCQnyeeTQ/gzLDdk/dVhWaX9Oomb84dQ/kNImgxsvP3xttwCUeo0eseKQ83OLl0LWslNCk4y4h7TNiKkpB+kIA==
+
 "@sveltejs/adapter-auto@next":
   version "1.0.0-next.80"
   resolved "https://registry.npmjs.org/@sveltejs/adapter-auto/-/adapter-auto-1.0.0-next.80.tgz"
