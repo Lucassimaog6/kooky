@@ -3,6 +3,8 @@
 	import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage';
 	import { v4 } from 'uuid';
 	import Icon from '@iconify/svelte';
+	import Header from '../components/header.svelte';
+	import Image from '../components/image.svelte';
 	const firebaseConfig = {
 		apiKey: 'AIzaSyBCsm0fErlM01kq6w2DJqyQaPOH0T3xD2Q',
 		authDomain: 'kooky-5b2df.firebaseapp.com',
@@ -27,8 +29,8 @@
 
 	function upload(e) {
 		const files = e.target.files;
-		for(let i = 0; i < files.length; i++){
-			const file = files[i]
+		for (let i = 0; i < files.length; i++) {
+			const file = files[i];
 			console.log(file.name + v4());
 			const refImage = ref(storage, `images/${file.name + v4()}`);
 			uploadBytes(refImage, file).then(() => {
@@ -38,24 +40,15 @@
 	}
 </script>
 
-<header>
-	<h1>Kooky, o coelho mais lindo</h1>
-	<input
-		id="file"
-		type="file"
-		multiple
-		on:change={(e) => {
-			upload(e);
-		}}
-	/>
-	<label for="file"
-		><Icon icon="ic:round-add-photo-alternate" width="1.5rem" /> Adicionar fotos!</label
-	>
-</header>
-
+<Header
+	title="Kooky, o coelho mais lindo"
+	on:change={(e) => {
+		upload(e);
+	}}
+/>
 <main>
 	{#each urlImages as url}
-		<img src={url} alt="kooky" />
+		<Image src={url} />
 	{/each}
 </main>
 
@@ -75,43 +68,12 @@
 		border-radius: 50%;
 		border: 10px double #282828;
 	}
-
-	input {
-		display: none;
-	}
-	label {
-		margin-top: 1rem;
-		display: flex;
-		align-items: center;
-		padding: 1rem;
-		background-color: #ddd;
-		border-radius: 1rem;
-		font-size: 1.1rem;
-		transition: scale 200ms, background-color 200ms;
-	}
-
-	label:hover {
-		scale: 1.1;
-		background-color: #bbb;
-	}
-
-	header {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding-top: 1rem;
-	}
-
 	main {
-		overflow-x: hidden;
+		max-width: 1400px;
 		column-count: 3;
-		column-gap: 2rem;
-		margin: 2rem;
-	}
-	img {
-		max-width: 100%;
-		margin: 1rem 0;
-		border-radius: 1rem;
+		column-gap: 1rem;
+		margin: 0 auto;
+		padding: 2rem;
 	}
 	@media screen and (max-width: 1000px) {
 		main {
@@ -119,13 +81,9 @@
 		}
 	}
 	@media screen and (max-width: 600px) {
-		h1{
-			font-size: 1.5rem;
-		}
 		main {
 			column-count: 1;
-			margin: 1rem;
-			column-gap: 0;
+			padding: 1rem;
 		}
 	}
 </style>
