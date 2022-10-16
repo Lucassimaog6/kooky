@@ -3,6 +3,7 @@
 	import { toaster, ToastProvider } from '@specialdoom/proi-ui';
 	import { initializeApp } from 'firebase/app';
 	import { getStorage, ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage';
+	import { getPerformance } from "firebase/performance";
 	import { v4 } from 'uuid';
 	import Icon from '@iconify/svelte';
 	import Header from '../components/header.svelte';
@@ -28,6 +29,9 @@
 
 	const app = initializeApp(firebaseConfig);
 	const storage = getStorage(app);
+
+	const perf = getPerformance(app);
+
 	const storageImagesRef = ref(storage, 'images');
 	listAll(storageImagesRef).then((res) => {
 		res.items.forEach((item) => {
