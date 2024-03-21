@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { storage } from "../utils/firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { addToLocalStorage } from "../utils/localStorage";
 
-
-
-export default function FileInput() {
+export default function FileInput({
+    addUrlToList
+}) {
     const handleSubmit = (event) => {
         event.preventDefault();
     
@@ -19,9 +17,7 @@ export default function FileInput() {
             next: (snapshot) => {},
             error: (error) => alert(error),
             complete: () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    addToLocalStorage(downloadURL);
-                })
+                addUrlToList(uploadTask.snapshot.ref);
             }
         })
     }
