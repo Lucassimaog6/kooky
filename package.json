@@ -1,7 +1,12 @@
 {
   "name": "kooky",
+  "description": "Um site para guardarmos muitas e muitas fotinhas do kooky",
+  "author": {
+    "name": "Lucas Ferreira Simão",
+    "url": "https://kooky.nuvemzinha.cloud"
+  },
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
