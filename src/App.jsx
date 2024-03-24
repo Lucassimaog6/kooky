@@ -1,12 +1,14 @@
 import Navbar from "./components/Navbar";
 import FileInput from "./components/FileInput";
 import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
+import ImageGrid from "./components/ImageGrid";
+import { useEffect, useMemo, useState } from "react";
 import { storage } from "./utils/firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 
 export default function App() {
     const [listUrls, setListUrls] = useState([]);
+    const windowWidth = useMemo(() => window.innerWidth, [window.innerWidth])
 
     useEffect(() => {
         const listRef = ref(storage, "files/");
@@ -26,13 +28,17 @@ export default function App() {
     return (
         <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
             <Navbar />
-            <div className="w-screen flex justify-center">
+            <div className="w-full flex justify-center">
                 <FileInput addUrlToList={addUrlToList} />
             </div>
-            <main className="mx-auto my-4 p-8 w-fit grid gap-4 place-items-center grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
-                {listUrls.map((url, index) => (
-                    <img className="rounded-lg w-[90%]" src={url} key={index} />
-                ))}
+            <main className="w-full p-4">
+                {windowWidth >= 1200 ? (
+                    <ImageGrid listUrls={listUrls} cols={3} />
+                ) : windowWidth >= 600 ? (
+                    <ImageGrid listUrls={listUrls} cols={2} />
+                ) : (
+                    <ImageGrid listUrls={listUrls} cols={1} />
+                )}
             </main>
             <Footer />
         </div>
